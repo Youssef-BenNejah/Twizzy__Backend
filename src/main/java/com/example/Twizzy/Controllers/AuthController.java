@@ -34,7 +34,6 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody AuthRequest request, @RequestParam(defaultValue = "false") boolean isAdmin) {
-        // Création et enregistrement de l'utilisateur
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
@@ -42,10 +41,9 @@ public class AuthController {
 
         User registeredUser = userService.registerUser(user, isAdmin);
 
-        // Return success message without token
         return ResponseEntity.ok(new AuthResponse("Register successful", null));
     }
-   
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {

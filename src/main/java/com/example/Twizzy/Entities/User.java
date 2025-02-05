@@ -19,6 +19,7 @@ public class User {
     private String email;
     private String password;
     private Set<Role> roles;  // Storing roles as a Set
+    private Set<Post> posts;
 
     // Manually written getters and setters:
     public String getId() {
@@ -59,6 +60,14 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
     }
 
 }

@@ -37,7 +37,9 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/webjars/**",
                                 "/swagger-ui.html").permitAll() // Autoriser Swagger UI et API docs
-                        .anyRequest().authenticated() // Toute autre requête doit être authentifiée
+                        .requestMatchers("/posts/**").authenticated()
+
+
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Utiliser une gestion d'état sans session
                 .securityContext(securityContext -> securityContext.requireExplicitSave(false)); // Ligne ajoutée pour une configuration explicite du contexte de sécurité
