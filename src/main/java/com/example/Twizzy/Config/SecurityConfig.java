@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/webjars/**",
                                 "/swagger-ui.html").permitAll()
-                        .requestMatchers("/posts/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/posts/**","/comments/**").hasAuthority("ROLE_USER")
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 🔥 Ajout du filtre JWT

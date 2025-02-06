@@ -2,13 +2,12 @@ package com.example.Twizzy.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
-@Document(collection = "posts")
-public class Post {
+@Document(collection = "comments")
+public class Comment {
     @Id
     private String id;
     private String content;
@@ -16,24 +15,22 @@ public class Post {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private int likes;
-    private int dislikes;
-    private Set<String> likedBy = new HashSet<>();
-    private Set<String> dislikedBy = new HashSet<>();
-    @JsonIgnoreProperties("post") // ✅ Prevents circular reference
-    private Set<Comment> comments = new HashSet<>();
+    @DBRef
+    @JsonIgnoreProperties("comments")
 
+    private Post post;
 
-    public Post() {}
+    public Comment() {}
 
-    public Post(String content, String authorId) {
+    public Comment(String content, String authorId, Post post) {
         this.content = content;
         this.authorId = authorId;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-        this.likes = 0;
-        this.dislikes = 0;
+        this.post = post;
     }
+
+    // Getters and Setters
 
     public String getId() {
         return id;
@@ -49,13 +46,6 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
-    }
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
     }
 
     public String getAuthorId() {
@@ -82,35 +72,11 @@ public class Post {
         this.updatedAt = updatedAt;
     }
 
-    public int getLikes() {
-        return likes;
+    public Post getPost() {
+        return post;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
-    public int getDislikes() {
-        return dislikes;
-    }
-
-    public void setDislikes(int dislikes) {
-        this.dislikes = dislikes;
-    }
-
-    public Set<String> getLikedBy() {
-        return likedBy;
-    }
-
-    public void setLikedBy(Set<String> likedBy) {
-        this.likedBy = likedBy;
-    }
-
-    public Set<String> getDislikedBy() {
-        return dislikedBy;
-    }
-
-    public void setDislikedBy(Set<String> dislikedBy) {
-        this.dislikedBy = dislikedBy;
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
