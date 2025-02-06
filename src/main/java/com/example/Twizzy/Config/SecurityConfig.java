@@ -46,9 +46,10 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers("/posts/**","/comments/**").hasAuthority("ROLE_USER")
+                        .requestMatchers("/users/**","/posts/**").hasAuthority("ROLE_ADMIN")
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 🔥 Ajout du filtre JWT
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .securityContext(securityContext -> securityContext.requireExplicitSave(false));
 
         return http.build();

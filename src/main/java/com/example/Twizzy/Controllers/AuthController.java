@@ -34,16 +34,18 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody AuthRequest request, @RequestParam(defaultValue = "false") boolean isAdmin) {
+        // Validate and create the user
         User user = new User();
         user.setUsername(request.getUsername());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
 
+        // Register the user with the correct roles based on isAdmin
         User registeredUser = userService.registerUser(user, isAdmin);
 
+        // Return response
         return ResponseEntity.ok(new AuthResponse("Register successful", null));
     }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {

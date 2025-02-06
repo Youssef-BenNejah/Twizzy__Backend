@@ -47,7 +47,6 @@ public class CommentService {
         Optional<Post> postOpt = postRepository.findById(postId);
         if (postOpt.isPresent()) {
             Post post = postOpt.get();
-            // Use the latest data from the database for comments
             return new HashSet<>(commentRepository.findByPostId(postId)); // Ensure it fetches fresh data
         }
         return null; // Post not found
@@ -59,11 +58,11 @@ public class CommentService {
         Optional<Comment> commentOpt = commentRepository.findById(commentId);
         if (commentOpt.isPresent()) {
             Comment comment = commentOpt.get();
-            comment.setContent(content); // Update the content
-            comment.setUpdatedAt(LocalDateTime.now()); // Update the timestamp
+            comment.setContent(content);
+            comment.setUpdatedAt(LocalDateTime.now());
             return commentRepository.save(comment);
         }
-        return null; // Comment not found
+        return null;
     }
 
 
