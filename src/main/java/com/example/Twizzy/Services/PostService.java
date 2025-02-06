@@ -1,7 +1,9 @@
 package com.example.Twizzy.Services;
 
 import com.example.Twizzy.Entities.Post;
+import com.example.Twizzy.Entities.User;
 import com.example.Twizzy.Repository.PostRepository;
+import com.example.Twizzy.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +17,18 @@ import java.util.Optional;
 public class PostService {
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     private String getCurrentUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername(); // Supposons que l'ID utilisateur est stocké ici
+            String username = ((UserDetails) principal).getUsername();
+
+            // 🔥 Fetch user ID from database using username
+            return userRepository.findByUsername(username)
+                    .map(User::getId) // Assuming User entity has an getId() method
+                    .orElse(null);
         }
         return null;
     }

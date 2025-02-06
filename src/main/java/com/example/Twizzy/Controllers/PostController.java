@@ -18,10 +18,10 @@ public class PostController {
     private PostService postService;
 
     @PostMapping
-    @PreAuthorize("isAuthenticated()")
     public Post createPost(@RequestBody Post post) {
         return postService.createPost(post.getContent());
     }
+
 
     @GetMapping
     public List<Post> getAllPosts() {
@@ -34,25 +34,21 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     public Post updatePost(@PathVariable String id, @RequestBody Post post) {
         return postService.updatePost(id, post.getContent());
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
     public void deletePost(@PathVariable String id) {
         postService.deletePost(id);
     }
 
     @PostMapping("/{id}/like")
-    @PreAuthorize("isAuthenticated()")
     public Post likePost(@PathVariable String id) {
         return postService.likePost(id);
     }
 
     @PostMapping("/{id}/dislike")
-    @PreAuthorize("isAuthenticated()")
     public Post dislikePost(@PathVariable String id) {
         return postService.dislikePost(id);
     }
