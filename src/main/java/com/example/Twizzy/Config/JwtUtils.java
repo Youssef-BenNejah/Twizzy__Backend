@@ -32,6 +32,7 @@ public class JwtUtils {
                 .claim("userId", user.getId())
                 .claim("Username", user.getUsername())
                 .claim("Email", user.getEmail())
+                .claim("Password", user.getPassword())
 
 
                 .setIssuedAt(new Date())
