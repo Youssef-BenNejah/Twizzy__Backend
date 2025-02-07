@@ -137,7 +137,7 @@ public class PostService {
         post.getSignaledBy().add(userId);
 
         // If the post gets 3 signals, mark it as signaled
-        if (post.getSignaledBy().size() >= 3) {
+        if (post.getSignaledBy().size() >= 1) {
             post.setSignaled(true);
         }
 
