@@ -30,6 +30,10 @@ public class JwtUtils {
                 .setSubject(user.getUsername())
                 .claim("roles", user.getRoles().stream().map(role -> "ROLE_" + role.name()).collect(Collectors.toSet()))
                 .claim("userId", user.getId())
+                .claim("Username", user.getUsername())
+                .claim("Email", user.getEmail())
+
+
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
