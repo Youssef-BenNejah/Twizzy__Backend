@@ -91,8 +91,15 @@ public class PostService {
             }
         }
 
+        post.setTrending(post.getLikes() > 3);
+
         return postRepository.save(post);
     }
+    public List<Post> getTrendingPosts() {
+        return postRepository.findByIsTrending(true);
+    }
+
+
 
     public Post dislikePost(String id) {
         String userId = getCurrentUserId();
@@ -115,4 +122,29 @@ public class PostService {
 
         return postRepository.save(post);
     }
+    public Post signalPost(String id) {
+        String userId = getCurrentUserId();
+        if (userId == null) throw new IllegalArgumentException("Utilisateur non authentifié");
+
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Post non trouvé"));
+
+        // Check if the user has already signaled the post
+        if (post.getSignaledBy().contains(userId)) {
+            throw new IllegalArgumentException("Vous avez déjà signalé ce post");
+        }
+
+        // Add the user to the signaledBy set
+        post.getSignaledBy().add(userId);
+
+        // If the post gets 3 signals, mark it as signaled
+        if (post.getSignaledBy().size() >= 3) {
+            post.setSignaled(true);
+        }
+
+        return postRepository.save(post);
+    }
+    public List<Post> getSignaledPosts() {
+        return postRepository.findByIsSignaled(true);
+    }
+
 }

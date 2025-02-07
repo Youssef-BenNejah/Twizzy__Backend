@@ -3,11 +3,17 @@ package com.example.Twizzy.Dto;
 public class AuthResponse {
     private String message;
     private String token;
+    private String userId;  // New field for the user ID
 
-    // Constructor to accept both message and token
-    public AuthResponse(String message, String token) {
+    // Constructor to accept both message, token, and userId
+    public AuthResponse(String message, String token, String userId) {
         this.message = message;
         this.token = token;
+        this.userId = userId;
+    }
+
+    // No-args constructor
+    public AuthResponse() {
     }
 
     // Getters and setters
@@ -19,26 +25,28 @@ public class AuthResponse {
         this.message = message;
     }
 
-
-    // No-args constructor
-    public AuthResponse() {
-    }
-
-    // Getter for token
     public String getToken() {
         return token;
     }
 
-    // Setter for token
     public void setToken(String token) {
         this.token = token;
     }
 
-    // Optional: Override toString(), equals(), and hashCode() methods if needed
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "AuthResponse{" +
-                "token='" + token + '\'' +
+                "message='" + message + '\'' +
+                ", token='" + token + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 

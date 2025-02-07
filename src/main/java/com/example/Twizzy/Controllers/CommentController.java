@@ -30,6 +30,7 @@ public class CommentController {
         String content = requestBody.get("content");
         String authorId = requestBody.get("authorId");
 
+
         if (content == null || content.isBlank() || authorId == null || authorId.isBlank()) {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("message", "Content and authorId are required!");

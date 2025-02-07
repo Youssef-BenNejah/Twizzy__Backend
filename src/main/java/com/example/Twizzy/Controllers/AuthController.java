@@ -44,7 +44,7 @@ public class AuthController {
         User registeredUser = userService.registerUser(user, isAdmin);
 
         // Return response
-        return ResponseEntity.ok(new AuthResponse("Register successful", null));
+        return ResponseEntity.ok(new AuthResponse("Register successful", null,registeredUser.getId()));
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
@@ -65,7 +65,7 @@ public class AuthController {
             String token = jwtUtils.generateToken(user);
 
             // Return the generated token along with a success message
-            return ResponseEntity.ok(new AuthResponse("Login successful", token));
+            return ResponseEntity.ok(new AuthResponse("Login successful", token,user.getId()));
         } catch (Exception e) {
             // If any error occurs, return unauthorized status
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");

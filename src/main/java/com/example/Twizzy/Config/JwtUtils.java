@@ -43,9 +43,6 @@ public class JwtUtils {
         return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public Set<String> getRolesFromToken(String token) {
-        return ((Set<String>) Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("roles"));
-    }
 
     public boolean validateToken(String token) {
         try {
@@ -86,5 +83,17 @@ public class JwtUtils {
 
         return new UsernamePasswordAuthenticationToken(username, null, authorities);
     }
+    public Set<String> getRolesFromToken(String token) {
+        return ((Set<String>) Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("roles"))
+                .stream()
+                .map(role -> role.replace("ROLE_", ""))  // Remove the ROLE_ prefix here
+                .collect(Collectors.toSet());
+    }
+
+
 
 }

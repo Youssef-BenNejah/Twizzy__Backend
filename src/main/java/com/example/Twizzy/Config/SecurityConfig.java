@@ -3,6 +3,7 @@ package com.example.Twizzy.Config;
 import com.example.Twizzy.Services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+
 public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(UserDetailsServiceImpl userDetailsServiceImpl) {
@@ -45,8 +47,9 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/webjars/**",
                                 "/swagger-ui.html").permitAll()
-                        .requestMatchers("/posts/**","/comments/**").hasAuthority("ROLE_USER")
-                        .requestMatchers("/users/**","/posts/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/posts").permitAll() //
+
+                        .requestMatchers("/posts/**","/comments/**","/users/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

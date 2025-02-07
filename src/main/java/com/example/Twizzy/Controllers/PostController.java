@@ -52,4 +52,18 @@ public class PostController {
     public Post dislikePost(@PathVariable String id) {
         return postService.dislikePost(id);
     }
+    @GetMapping("/trending")
+    public List<Post> getTrendingPosts() {
+        return postService.getTrendingPosts();
+    }
+    @PostMapping("/{id}/signal")
+    public Post signalPost(@PathVariable String id) {
+        return postService.signalPost(id);
+    }
+
+    // Get all signaled posts
+    @GetMapping("/signaled")
+    public List<Post> getSignaledPosts() {
+        return postService.getSignaledPosts();
+    }
 }

@@ -18,9 +18,14 @@ public class Post {
 
     private int likes;
     private int dislikes;
+    private boolean isTrending = false;
+    private boolean isSignaled = false;
+
+
     private Set<String> likedBy = new HashSet<>();
     private Set<String> dislikedBy = new HashSet<>();
-    @JsonIgnoreProperties("post") // ✅ Prevents circular reference
+    private Set<String> signaledBy = new HashSet<>();
+    @JsonIgnoreProperties("post")
     private Set<Comment> comments = new HashSet<>();
 
 
@@ -33,6 +38,7 @@ public class Post {
         this.updatedAt = LocalDateTime.now();
         this.likes = 0;
         this.dislikes = 0;
+        this.isTrending = false;
     }
 
     public String getId() {
@@ -41,6 +47,28 @@ public class Post {
 
     public void setId(String id) {
         this.id = id;
+    }
+    public boolean isSignaled() {
+        return isSignaled;
+    }
+
+    public void setSignaled(boolean signaled) {
+        isSignaled = signaled;
+    }
+
+    public Set<String> getSignaledBy() {
+        return signaledBy;
+    }
+
+    public void setSignaledBy(Set<String> signaledBy) {
+        this.signaledBy = signaledBy;
+    }
+    public boolean isTrending() {
+        return isTrending;
+    }
+
+    public void setTrending(boolean trending) {
+        isTrending = trending;
     }
 
     public String getContent() {
